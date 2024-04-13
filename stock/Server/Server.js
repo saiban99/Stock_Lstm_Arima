@@ -14,12 +14,10 @@ const executePython = async (script, args) => {
   const result = await new Promise((resolve, reject) => {
     let output;
 
-    // Get output from python script
     py.stdout.on("data", (data) => {
       output = JSON.parse(data);
     });
 
-    // Handle erros
     py.stderr.on("data", (data) => {
       console.error(`[python] Error occured: ${data}`);
       reject(`Error occured in ${script}`);
@@ -35,9 +33,12 @@ const executePython = async (script, args) => {
 };
 
 app.get("/predict", async (req, res) => {
+  const { symbol } = req.query; // Get stock symbol from query parameter
+  console.log(`stock : ${symbol}`);
+
   try {
-    const result = await executePython("stock_prediction.py", ["TSLA"]);
-    console.log(result);
+    const result = await executePython("stock_prediction.py", [symbol]); // Pass symbol to Python script
+    // console.log(result);
     res.json({ result: result });
   } catch (error) {
     res.status(500).json({ error: error });

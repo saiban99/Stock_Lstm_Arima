@@ -26,7 +26,7 @@ import sys
 warnings.filterwarnings('ignore')
 
 # Defining ticker symbol
-tickerSymbol = "TSLA"
+tickerSymbol = sys.argv[1]
 df = yf.Ticker(tickerSymbol)
 df
 

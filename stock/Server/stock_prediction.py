@@ -26,7 +26,7 @@ import sys
 warnings.filterwarnings('ignore')
 
 # Defining ticker symbol
-tickerSymbol = sys.argv[1]
+tickerSymbol = "TSLA"
 df = yf.Ticker(tickerSymbol)
 df
 
@@ -90,12 +90,17 @@ combined_prices = pd.concat([prices, pd.Series(predicted_price, index=future_dat
 # plt.grid(True)
 # plt.show()
 
-#Convert the plot to a JSON string
-graph_data = json.dumps({
-  "labels": combined_prices.index.strftime("%Y-%m-%d").tolist(),
-  "prices": combined_prices.tolist()
-})
+# #Convert the plot to a JSON string
+# graph_data = json.dumps({
+#   "labels": combined_prices.index.strftime("%Y-%m-%d").tolist(),
+#   "prices": combined_prices.tolist()
+# })
 
+# Convert the plot to a JSON string
+graph_data = json.dumps({
+  "labels": combined_prices.index.strftime("%Y-%m-%d").tolist() + [tomorrow.strftime("%Y-%m-%d")],
+  "prices": combined_prices.values.tolist() + [predicted_price]
+})
 # Print the JSON string
 print(graph_data)
 

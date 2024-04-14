@@ -38,7 +38,7 @@ app.get("/predict", async (req, res) => {
 
   try {
     const result = await executePython("stock_prediction.py", [symbol]); // Pass symbol to Python script
-    console.log(result);
+    // console.log(result);
     res.json({ result: result });
   } catch (error) {
     res.status(500).json({ error: error });
